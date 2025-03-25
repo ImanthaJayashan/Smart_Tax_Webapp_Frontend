@@ -5,6 +5,7 @@ const AboutUs = () => {
   const [feedback, setFeedback] = useState('');
   const [feedbackList, setFeedbackList] = useState([]);
   const [editingIndex, setEditingIndex] = useState(null);
+  const [replyingIndex, setReplyingIndex] = useState(null);
 
   const handleAddFeedback = () => {
     setShowFeedbackForm(true);
@@ -12,7 +13,10 @@ const AboutUs = () => {
 
   const handleSubmitFeedback = () => {
     if (feedback.trim()) {
-      setFeedbackList([...feedbackList, { text: feedback, replies: [], isEditing: false }]);
+      setFeedbackList([
+        ...feedbackList,
+        { name: 'Anonymous', text: feedback, replies: [], isEditing: false },
+      ]);
       setFeedback(''); // Clear the text area
       setShowFeedbackForm(false); // Hide the form after submission
     }
@@ -38,7 +42,7 @@ const AboutUs = () => {
 
   const handleReplyFeedback = (index, replyText) => {
     const updatedFeedbackList = [...feedbackList];
-    updatedFeedbackList[index].replies.push(replyText);
+    updatedFeedbackList[index].replies.push({ name: 'Anonymous', text: replyText });
     setFeedbackList(updatedFeedbackList);
   };
 
@@ -100,7 +104,7 @@ const AboutUs = () => {
           {/* Add Feedback Button */}
           <button
             onClick={handleAddFeedback}
-            className="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition duration-300"
+            className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-blue-600 transition duration-300"
           >
             Add Feedback
           </button>
@@ -111,12 +115,27 @@ const AboutUs = () => {
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
               <h2 className="text-xl font-bold mb-4">
-                {editingIndex !== null ? 'Edit Feedback' : 'Add Feedback'}
+                {editingIndex !== null
+                  ? 'Edit Feedback'
+                  : replyingIndex !== null
+                  ? 'Reply to Feedback'
+                  : 'Add Feedback'}
               </h2>
+              {replyingIndex !== null && (
+                <div className="mb-4 p-4 border border-gray-300 rounded bg-gray-100">
+                  <p className="text-gray-800">
+                    <strong>Original Comment:</strong> {feedbackList[replyingIndex].text}
+                  </p>
+                </div>
+              )}
               <textarea
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}
-                placeholder="Write your feedback here..."
+                placeholder={
+                  replyingIndex !== null
+                    ? 'Write your reply here...'
+                    : 'Write your feedback here...'
+                }
                 className="w-full min-h-[100px] p-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 style={{
                   resize: 'vertical', // Allow vertical resizing only
@@ -127,7 +146,8 @@ const AboutUs = () => {
                   onClick={() => {
                     setShowFeedbackForm(false);
                     setFeedback('');
-                    setEditingIndex(null); // Reset editing state
+                    setEditingIndex(null);
+                    setReplyingIndex(null); // Reset replying state
                   }}
                   className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
                 >
@@ -141,17 +161,23 @@ const AboutUs = () => {
                       updatedFeedbackList[editingIndex].text = feedback;
                       updatedFeedbackList[editingIndex].isEditing = false;
                       setFeedbackList(updatedFeedbackList);
+                    } else if (replyingIndex !== null) {
+                      // Add reply to feedback
+                      const updatedFeedbackList = [...feedbackList];
+                      updatedFeedbackList[replyingIndex].replies.push(feedback);
+                      setFeedbackList(updatedFeedbackList);
                     } else {
                       // Add new feedback
                       handleSubmitFeedback();
                     }
                     setShowFeedbackForm(false);
                     setFeedback('');
-                    setEditingIndex(null); // Reset editing state
+                    setEditingIndex(null);
+                    setReplyingIndex(null); // Reset replying state
                   }}
                   className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
                 >
-                  {editingIndex !== null ? 'Save' : 'Submit'}
+                  {replyingIndex !== null ? 'Submit Reply' : editingIndex !== null ? 'Save' : 'Submit'}
                 </button>
               </div>
             </div>
@@ -159,96 +185,127 @@ const AboutUs = () => {
         )}
 
         {/* Display Feedback */}
-        <div className="mt-6 w-full max-w-md">
+        <div className="mt-6 w-full max-w-2xl">
           <h2 className="text-2xl font-bold text-blue-600 mb-4">Feedback</h2>
           {feedbackList.map((item, index) => (
             <div
               key={index}
-              className="p-4 mb-2 bg-white border border-gray-300 rounded shadow relative"
+              className="relative p-6 mb-6 bg-gray-50 border border-gray-300 rounded-lg shadow-lg" // Added distinct styling for the comment box
             >
-              <div className="flex justify-between items-center">
-                {item.isEditing ? (
-                  <textarea
-                    defaultValue={item.text}
-                    onBlur={(e) => handleSaveFeedback(index, e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  ></textarea>
-                ) : (
-                  <p
-                    className="text-gray-800 break-words overflow-hidden"
-                    style={{
-                      wordWrap: 'break-word',
-                      overflowWrap: 'break-word',
-                      maxHeight: '150px', // Limit height
-                      overflowY: 'auto', // Enable scrolling for long text
-                      padding: '10px', // Add padding for paragraph-like appearance
-                      border: '1px solid #ccc', // Add border for outline
-                      borderRadius: '5px', // Rounded corners
-                      backgroundColor: '#f9f9f9', // Light background for better readability
-                    }}
-                  >
-                    {item.text}
-                  </p>
-                )}
-                {/* Dropdown Menu */}
-                <div className="relative">
-                  {!item.isEditing && (
-                    <button
-                      onClick={() => {
-                        const updatedFeedbackList = [...feedbackList];
-                        updatedFeedbackList[index].showMenu = !updatedFeedbackList[index].showMenu;
-                        setFeedbackList(updatedFeedbackList);
+              {/* User Logo and Name */}
+              <div className="absolute top-[-20px] left-[-20px] flex flex-col items-center">
+                <img
+                  src="https://t4.ftcdn.net/jpg/02/29/75/83/360_F_229758328_7x8jwCwjtBMmC6rgFzLFhZoEpLobB6L8.jpg" // Replace with actual user logo URL
+                  alt="User Logo"
+                  className="h-12 w-12 rounded-full border-2 border-blue-500 shadow-md" // Circular logo with border and shadow
+                />
+                <p className="text-xs text-gray-600 mt-1"> {/* Commenter's name */}
+                  {item.name || 'Anonymous'}
+                </p>
+              </div>
+              <div className="ml-16"> {/* Adjusted margin to align content with the logo */}
+                <div className="flex justify-between items-center">
+                  {item.isEditing ? (
+                    <textarea
+                      defaultValue={item.text}
+                      onBlur={(e) => handleSaveFeedback(index, e.target.value)}
+                      className="w-full p-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    ></textarea>
+                  ) : (
+                    <p
+                      className="text-gray-800 break-words overflow-hidden"
+                      style={{
+                        wordWrap: 'break-word',
+                        overflowWrap: 'break-word',
+                        maxHeight: '300px', // Increased height limit
+                        overflowY: 'auto', // Enable scrolling for long text
+                        padding: '20px', // Adjusted padding
+                        border: '1px solid #ccc', // Add border for outline
+                        borderRadius: '5px', // Rounded corners
+                        backgroundColor: '#f9f9f9', // Light background for better readability
                       }}
-                      className="px-2 py-1 text-gray-500 hover:text-gray-700"
                     >
-                      ...
-                    </button>
+                      {item.text}
+                    </p>
                   )}
-                  {item.showMenu && !item.isEditing && (
-                    <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded shadow-lg z-10">
+                  {/* Dropdown Menu */}
+                  <div className="relative">
+                    {!item.isEditing && (
                       <button
                         onClick={() => {
                           const updatedFeedbackList = [...feedbackList];
-                          updatedFeedbackList[index].isEditing = true;
-                          updatedFeedbackList[index].showMenu = false; // Hide dropdown
+                          updatedFeedbackList[index].showMenu = !updatedFeedbackList[index].showMenu;
                           setFeedbackList(updatedFeedbackList);
-                          setFeedback(item.text); // Set feedback text for editing
-                          setShowFeedbackForm(true); // Show feedback form
-                          setEditingIndex(index); // Set editing index
                         }}
-                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                        className="px-2 py-1 text-gray-500 hover:text-gray-700"
                       >
-                        Edit
+                        ...
                       </button>
-                      <button
-                        onClick={() => handleDeleteFeedback(index)}
-                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Delete
-                      </button>
-                      <button
-                        onClick={() => {
-                          const replyText = prompt('Write your reply:');
-                          if (replyText) handleReplyFeedback(index, replyText);
-                        }}
-                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
-                      >
-                        Reply
-                      </button>
-                    </div>
-                  )}
+                    )}
+                    {item.showMenu && !item.isEditing && (
+                      <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded shadow-lg z-10">
+                        <button
+                          onClick={() => {
+                            const updatedFeedbackList = [...feedbackList];
+                            updatedFeedbackList[index].isEditing = true;
+                            updatedFeedbackList[index].showMenu = false; // Hide dropdown
+                            setFeedbackList(updatedFeedbackList);
+                            setFeedback(item.text); // Set feedback text for editing
+                            setShowFeedbackForm(true); // Show feedback form
+                            setEditingIndex(index); // Set editing index
+                          }}
+                          className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeleteFeedback(index)}
+                          className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          Delete
+                        </button>
+                        <button
+                          onClick={() => {
+                            setReplyingIndex(index); // Set replying index
+                            setShowFeedbackForm(true); // Show feedback form
+                          }}
+                          className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                        >
+                          Reply
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
+                {/* Display Replies */}
+                {item.replies.length > 0 && (
+                  <div className="mt-4 pl-6 border-l-4 border-blue-500">
+                    {item.replies.map((reply, replyIndex) => (
+                      <div
+                        key={replyIndex}
+                        className="mb-2 p-3 bg-gray-100 rounded shadow-sm"
+                        style={{
+                          borderLeft: '4px solid #2b2d78', // Vertical line for separation
+                          wordWrap: 'break-word', // Ensure long words break to the next line
+                          overflowWrap: 'break-word', // Handle overflow for long words
+                          maxWidth: '100%', // Prevent text from exceeding the container width
+                          overflow: 'hidden', // Hide any overflowing content
+                        }}
+                      >
+                        <p
+                          className="text-sm text-gray-800"
+                          style={{
+                            maxHeight: '150px', // Limit the height of the reply box
+                            overflowY: 'auto', // Add vertical scrolling for long replies
+                          }}
+                        >
+                          <strong>Reply:</strong> {reply}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-              {/* Display Replies */}
-              {item.replies.length > 0 && (
-                <div className="mt-2 pl-4 border-l-2 border-gray-300">
-                  {item.replies.map((reply, replyIndex) => (
-                    <p key={replyIndex} className="text-sm text-gray-700">
-                      {reply}
-                    </p>
-                  ))}
-                </div>
-              )}
             </div>
           ))}
         </div>
