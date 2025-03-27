@@ -166,7 +166,7 @@ const HomePage = () => {
                 Learn about taxes with our beginner-friendly guide, featuring a comprehensive video that walks you through the tax-paying system step by step. Perfect for newcomers looking to understand the basics and get started with confidence.
               </p>
               <button
-                onClick={() => navigate('/benefits')} // Navigate to the benefits page
+                onClick={() => navigate('/LearnAboutTax')} // Navigate to the 
                 className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition"
               >
                 Learn More
