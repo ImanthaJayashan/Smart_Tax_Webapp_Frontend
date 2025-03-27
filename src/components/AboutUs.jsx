@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const AboutUs = () => {
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
@@ -14,22 +12,14 @@ const AboutUs = () => {
   };
 
   const handleSubmitFeedback = () => {
-    if (!feedback.trim()) {
-      alert("Feedback cannot be empty."); // Validation for empty feedback
-      return;
+    if (feedback.trim()) {
+      setFeedbackList([
+        ...feedbackList,
+        { name: 'Anonymous', text: feedback, replies: [], isEditing: false },
+      ]);
+      setFeedback(''); // Clear the text area
+      setShowFeedbackForm(false); // Hide the form after submission
     }
-
-    if (feedback.trim().length < 10) {
-      alert("Feedback must be at least 10 characters long."); // Validation for minimum length
-      return;
-    }
-
-    setFeedbackList([
-      ...feedbackList,
-      { name: 'Anonymous', text: feedback, replies: [], isEditing: false },
-    ]);
-    setFeedback(''); // Clear the text area
-    setShowFeedbackForm(false); // Hide the form after submission
   };
 
   const handleEditFeedback = (index) => {
@@ -58,8 +48,6 @@ const AboutUs = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Toast Container */}
-      <ToastContainer />
       {/* Header */}
       <header style={{ backgroundColor: '#2b2d78' }} className="text-white p-4">
         <div className="container mx-auto flex justify-between items-center">
