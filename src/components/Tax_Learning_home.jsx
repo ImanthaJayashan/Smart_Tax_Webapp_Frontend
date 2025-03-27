@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const HomePage = () => {
   const navigate = useNavigate(); // Hook to navigate between pages
   const [currentSlide, setCurrentSlide] = useState(0); // State to track the current slide
+  const [selectedDistrict, setSelectedDistrict] = useState(''); // State for selected district
+  const [mapCenter, setMapCenter] = useState({ lat: 6.9271, lng: 79.8612 }); // Default center (Colombo)
+  const [taxOffices, setTaxOffices] = useState([]); // State to store tax office locations
 
   const images = [
     'https://4kwallpapers.com/images/wallpapers/forex-trading-3440x1440-13938.jpg',
@@ -19,6 +23,34 @@ const HomePage = () => {
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
   }, [images.length]);
+
+  const districts = [
+    'Ampara', 'Anuradhapura', 'Badulla', 'Batticaloa', 'Colombo', 'Galle', 'Gampaha',
+    'Hambantota', 'Jaffna', 'Kandy', 'Kegalle', 'Kilinochchi', 'Kurunegala', 'Mannar',
+    'Matale', 'Matara', 'Moneragala', 'Mullaitivu', 'Nuwara Eliya', 'Polonnaruwa',
+    'Puttalam', 'Ratnapura', 'Trincomalee', 'Vavuniya', 'Kalutara'
+  ];
+
+  const districtCoordinates = {
+    Colombo: { lat: 6.9271, lng: 79.8612, offices: [{ lat: 6.9271, lng: 79.8612 }] },
+    Kandy: { lat: 7.2906, lng: 80.6337, offices: [{ lat: 7.2906, lng: 80.6337 }] },
+    Galle: { lat: 6.0535, lng: 80.2210, offices: [{ lat: 6.0535, lng: 80.2210 }] },
+    Jaffna: { lat: 9.6615, lng: 80.0255, offices: [{ lat: 9.6615, lng: 80.0255 }] },
+  };
+
+  const handleSearch = () => {
+    // Handle search action (e.g., show tax locations based on the selected district)
+    console.log('Searching for tax locations in', selectedDistrict);
+
+    // Update map center based on selected district (example coordinates)
+    if (districtCoordinates[selectedDistrict]) {
+      const { lat, lng, offices } = districtCoordinates[selectedDistrict];
+      setMapCenter({ lat, lng });
+      setTaxOffices(offices || []);
+    } else {
+      alert('Coordinates for the selected district are not available.');
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col relative">
@@ -92,9 +124,6 @@ const HomePage = () => {
           <div className="container mx-auto text-center">
             <p className="text-gray-700 text-lg leading-relaxed text-center px-6 md:px-12">
               Welcome to the Smart Tax Learning Hub! Whether you're just starting out or looking for a simpler way to handle your taxes, our platform is designed to guide you every step of the way.
-              We offer a comprehensive A-Z tax guide to help you understand everything from the basics of taxes to filing procedures. This guide is perfect for beginners, breaking down complex topics into easy-to-follow lessons.
-              One of our standout features is the Google Maps integration, which allows you to easily find tax offices and service centers near you, helping you get the support you need without any hassle. Additionally, 
-              our Tax Calculator makes it easy to estimate how much you need to pay, simplifying the process based on your income, deductions, and applicable rates. With the Smart Tax Learning Hub, managing your taxes has never been easier or more straightforward.
             </p>
           </div>
         </div>
@@ -110,10 +139,10 @@ const HomePage = () => {
                 className="rounded-lg shadow-lg mb-4"
               />
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                Explore Our Tax Solutions
+                Find All Tax Forms
               </h3>
               <p className="text-gray-600 mb-6 text-center">
-                Discover how our platform can simplify your tax filing and management process. Get started today!
+                Discover all the tax forms you need quickly and easily, without any confusion or frustration.
               </p>
               <button
                 onClick={() => navigate('/explore')} // Navigate to the explore page
@@ -126,15 +155,15 @@ const HomePage = () => {
             {/* Section 2 */}
             <div className="w-full md:w-1/3 bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
               <img
-                src="https://via.placeholder.com/600x400"
+                src="https://pictory.ai/wp-content/uploads/2024/04/Teaching-Video-Maker-1.png"
                 alt="Tax Benefits"
                 className="rounded-lg shadow-lg mb-4"
               />
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                Learn About Tax Benefits
+                Learn About Tax 
               </h3>
               <p className="text-gray-600 mb-6 text-center">
-                Understand the various tax benefits available to you and how to maximize them.
+                Learn about taxes with our beginner-friendly guide, featuring a comprehensive video that walks you through the tax-paying system step by step. Perfect for newcomers looking to understand the basics and get started with confidence.
               </p>
               <button
                 onClick={() => navigate('/benefits')} // Navigate to the benefits page
@@ -147,15 +176,15 @@ const HomePage = () => {
             {/* Section 3 */}
             <div className="w-full md:w-1/3 bg-white p-6 rounded-lg shadow-lg flex flex-col items-center">
               <img
-                src="https://via.placeholder.com/600x400"
+                src="https://c4.wallpaperflare.com/wallpaper/903/792/993/accounting-balance-banking-calculation-wallpaper-preview.jpg"
                 alt="Tax Filing"
                 className="rounded-lg shadow-lg mb-4"
               />
               <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                Simplify Your Tax Filing
+                Tax Calculator
               </h3>
               <p className="text-gray-600 mb-6 text-center">
-                Use our platform to file your taxes quickly and accurately with minimal effort.
+                Use our inbuilt smart tax calculator to easily determine how much tax you need to pay. Simply input your details, and the calculator will quickly provide an accurate estimate, making tax calculations effortless.
               </p>
               <button
                 onClick={() => navigate('/filing')} // Navigate to the filing page
@@ -164,6 +193,52 @@ const HomePage = () => {
                 Get Started
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Find Nearest Tax Locations */}
+        <div className="bg-gray-100 py-8">
+          <div className="container mx-auto text-center">
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">
+              Find Nearest Tax Locations
+            </h3>
+            <div className="flex justify-center items-center space-x-4">
+              <select
+                value={selectedDistrict}
+                onChange={(e) => setSelectedDistrict(e.target.value)}
+                className="bg-white border border-gray-300 rounded-lg p-2"
+              >
+                <option value="">Select District</option>
+                {districts.map((district, index) => (
+                  <option key={index} value={district}>
+                    {district}
+                  </option>
+                ))}
+              </select>
+              <button
+                onClick={handleSearch}
+                className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Google Map */}
+        <div className="bg-gray-100 py-8">
+          <div className="container mx-auto">
+            <LoadScript googleMapsApiKey="AIzaSyD4qpUk5ccuNhasXzgLi0XukLu4m5_0Pkw">
+              <GoogleMap
+                mapContainerStyle={{ width: '100%', height: '400px' }}
+                center={mapCenter}
+                zoom={10}
+              >
+                {taxOffices.map((office, index) => (
+                  <Marker key={index} position={office} />
+                ))}
+              </GoogleMap>
+            </LoadScript>
           </div>
         </div>
       </main>
