@@ -28,6 +28,30 @@ const LearnAboutTax = () => {
       category: 'Personal',
       url: 'https://www.youtube.com/embed/j1MfixXJDbw?si=QfiL1Sx1DzMTBr1J',
     },
+    {
+      title: 'Basics of Sri Lankan Tax System 1',
+      level: 'Beginner',
+      paidTaxBefore: 'No',
+      category: 'Personal',
+      url: 'https://www.youtube.com/embed/watch?v=8sh66_7id6s&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=2&ab_channel=GayanAbeyrathna',
+    },
+    {
+      title: 'Basics of Sri Lankan Tax System 2',
+      level: 'Beginner',
+      paidTaxBefore: 'No',
+      category: 'Personal',
+      url: 'https://www.youtube.com/embed/watch?v=Rv74dlgYK-M&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=1&ab_channel=GayanAbeyrathna',
+    },
+    //Intermediate/No/Personal
+    {
+      title: 'Taxation for an Individual - Video 1',
+      level: 'Intermediate',
+      paidTaxBefore: 'No',
+      category: 'Personal',
+      url: 'https://www.youtube.com/embed/watch?v=O85YlwKVipw&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=9&ab_channel=GayanAbeyrathna'
+    }
+    
+    
     // Add more videos with different categories, levels, or tax status here
   ];
 
@@ -115,7 +139,17 @@ const LearnAboutTax = () => {
             <div>
               <select
                 value={educationLevel}
-                onChange={(e) => setEducationLevel(e.target.value)}
+                onChange={(e) => {
+                  const selectedLevel = e.target.value;
+                  setEducationLevel(selectedLevel);
+
+                  // Automatically set "Have you paid tax before?" to "Yes" and disable it for Intermediate/Advanced
+                  if (selectedLevel === 'Intermediate' || selectedLevel === 'Advanced') {
+                    setHasPaidTax('Yes');
+                  } else {
+                    setHasPaidTax(''); // Reset if Beginner is selected
+                  }
+                }}
                 className={`bg-white border ${errors.educationLevel ? 'border-red-500' : 'border-gray-300'} rounded-lg p-2`}
               >
                 <option value="">Select Education Level</option>
@@ -131,7 +165,10 @@ const LearnAboutTax = () => {
               <select
                 value={hasPaidTax}
                 onChange={(e) => setHasPaidTax(e.target.value)}
-                className={`bg-white border ${errors.hasPaidTax ? 'border-red-500' : 'border-gray-300'} rounded-lg p-2`}
+                disabled={educationLevel === 'Intermediate' || educationLevel === 'Advanced'} // Disable for Intermediate/Advanced
+                className={`bg-white border ${errors.hasPaidTax ? 'border-red-500' : 'border-gray-300'} rounded-lg p-2 ${
+                  educationLevel === 'Intermediate' || educationLevel === 'Advanced' ? 'bg-gray-200 cursor-not-allowed' : ''
+                }`}
               >
                 <option value="">Have you paid tax before?</option>
                 <option value="Yes">Yes</option>
@@ -186,7 +223,17 @@ const LearnAboutTax = () => {
             allowFullScreen
             title="Introduction to Tax"
             className="rounded-lg shadow-lg"
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'block';
+            }}
           ></iframe>
+          <p
+            style={{ display: 'none' }}
+            className="text-red-500 mt-2"
+          >
+            Unable to load video. <a href="https://www.youtube.com/watch?v=X2Qrmi450nM" target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">Watch on YouTube</a>.
+          </p>
         </div>
       </div>
 
@@ -207,8 +254,17 @@ const LearnAboutTax = () => {
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 title={video.title}
-                className="mt-4"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'block';
+                }}
               ></iframe>
+              <p
+                style={{ display: 'none' }}
+                className="text-red-500 mt-2"
+              >
+                Unable to load video. <a href={video.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">Watch on YouTube</a>.
+              </p>
             </div>
           ))
         ) : (
