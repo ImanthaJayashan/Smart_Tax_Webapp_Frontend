@@ -42,13 +42,57 @@ const LearnAboutTax = () => {
       category: 'Personal',
       url: 'https://www.youtube.com/embed/watch?v=Rv74dlgYK-M&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=1&ab_channel=GayanAbeyrathna',
     },
-    //Intermediate/No/Personal
+
+    //Intermediate/yes/Personal
     {
       title: 'Taxation for an Individual - Video 1',
       level: 'Intermediate',
-      paidTaxBefore: 'No',
+      paidTaxBefore: 'Yes', // Added this property
       category: 'Personal',
       url: 'https://www.youtube.com/embed/watch?v=O85YlwKVipw&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=9&ab_channel=GayanAbeyrathna'
+    },
+    {
+      title: 'VAT - Video 2',
+      level: 'Intermediate',
+      paidTaxBefore: 'Yes', // Added this property
+      category: 'Personal',
+      url: 'https://www.youtube.com/embed/watch?v=YA6ylPibkLc&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=11&ab_channel=GayanAbeyrathna'
+    },
+    //advanced 
+    {
+      title: 'Calculation of Taxable income of an individual',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes', // Added this property
+      category: 'Personal',
+      url: 'https://www.youtube.com/embed/watch?v=5zjDWnXElJw&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=5&ab_channel=GayanAbeyrathna'
+    },
+    {
+      title: 'Income Tax & Administration - Video 1',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes', // Added this property
+      category: 'Personal',
+      url: 'https://www.youtube.com/embed/watch?v=XYxY9ZNsa4o&list=PL_IWrf861Ze6npqqKswnRprjAlq9XExY-&ab_channel=CAOnlineAcademy'
+    },
+    {
+      title: 'Income Tax & Administration - Video 2',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes', // Added this property
+      category: 'Personal',
+      url: 'https://www.youtube.com/embed/watch?v=tHM5UAKEKo4&list=PL_IWrf861Ze6npqqKswnRprjAlq9XExY-&index=2&ab_channel=CAOnlineAcademy'
+    },
+    {
+      title: 'Taxation of Other Persons and Entities',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes', // Added this property
+      category: 'Personal',
+      url: 'https://www.youtube.com/embed/watch?v=MNqz5z6uAOE&list=PL_IWrf861Ze6npqqKswnRprjAlq9XExY-&index=3&ab_channel=CAOnlineAcademy'
+    },
+    {
+      title: 'Individual Tax Calculation Advanced',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes', // Added this property
+      category: 'Personal',
+      url: 'https://www.youtube.com/embed/watch?v=nBUu53yhE-o&list=PL_IWrf861Ze6npqqKswnRprjAlq9XExY-&index=6&ab_channel=CAOnlineAcademy'
     }
     
     
