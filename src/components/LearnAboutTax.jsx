@@ -10,6 +10,7 @@ const LearnAboutTax = () => {
   const [taxCategory, setTaxCategory] = useState('');
   const [filteredVideos, setFilteredVideos] = useState([]);
   const [description, setDescription] = useState(''); // State for description
+  const [errors, setErrors] = useState({ educationLevel: false, hasPaidTax: false, taxCategory: false });
 
   // YouTube videos for different filters (sample data)
   const allVideos = [
@@ -27,11 +28,26 @@ const LearnAboutTax = () => {
       category: 'Personal',
       url: 'https://www.youtube.com/embed/j1MfixXJDbw?si=QfiL1Sx1DzMTBr1J',
     },
+    // Add more videos with different categories, levels, or tax status here
   ];
 
   const handleSearch = () => {
+    // Validation: Check if all filter options are selected
+    const newErrors = {
+      educationLevel: !educationLevel,
+      hasPaidTax: !hasPaidTax,
+      taxCategory: !taxCategory,
+    };
+
+    setErrors(newErrors);
+
+    // If any errors exist, stop the search
+    if (Object.values(newErrors).some((error) => error)) {
+      return;
+    }
+
     // Filter videos based on selected filters
-    const filtered = allVideos.filter(video => {
+    const filtered = allVideos.filter((video) => {
       return (
         (educationLevel ? video.level === educationLevel : true) &&
         (hasPaidTax ? video.paidTaxBefore === hasPaidTax : true) &&
@@ -41,7 +57,7 @@ const LearnAboutTax = () => {
 
     setFilteredVideos(filtered);
 
-    // Set description if filters match
+    // Set description based on selected filters
     if (filtered.length > 0) {
       setDescription(`
         Payment of Tax:
@@ -91,44 +107,53 @@ const LearnAboutTax = () => {
         </button>
       </header>
 
-      {/* Enhanced Filter Options Bar */}
+      {/* Filter Options */}
       <div className="bg-gray-200 py-4 px-6">
         <div className="container mx-auto flex flex-wrap justify-between items-center space-y-4 md:space-y-0">
           <div className="flex flex-wrap space-x-4 items-center">
             {/* Education Level Dropdown */}
-            <select
-              value={educationLevel}
-              onChange={(e) => setEducationLevel(e.target.value)}
-              className="bg-white border border-gray-300 rounded-lg p-2"
-            >
-              <option value="">Select Education Level</option>
-              <option value="Beginner">Beginner</option>
-              <option value="Intermediate">Intermediate</option>
-              <option value="Advanced">Advanced</option>
-            </select>
+            <div>
+              <select
+                value={educationLevel}
+                onChange={(e) => setEducationLevel(e.target.value)}
+                className={`bg-white border ${errors.educationLevel ? 'border-red-500' : 'border-gray-300'} rounded-lg p-2`}
+              >
+                <option value="">Select Education Level</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+              {errors.educationLevel && <p className="text-red-500 text-sm mt-1">Please select an education level.</p>}
+            </div>
 
             {/* Paid Tax Before Dropdown */}
-            <select
-              value={hasPaidTax}
-              onChange={(e) => setHasPaidTax(e.target.value)}
-              className="bg-white border border-gray-300 rounded-lg p-2"
-            >
-              <option value="">Have you paid tax before?</option>
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
+            <div>
+              <select
+                value={hasPaidTax}
+                onChange={(e) => setHasPaidTax(e.target.value)}
+                className={`bg-white border ${errors.hasPaidTax ? 'border-red-500' : 'border-gray-300'} rounded-lg p-2`}
+              >
+                <option value="">Have you paid tax before?</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+              {errors.hasPaidTax && <p className="text-red-500 text-sm mt-1">Please select an option.</p>}
+            </div>
 
             {/* Tax Category Dropdown */}
-            <select
-              value={taxCategory}
-              onChange={(e) => setTaxCategory(e.target.value)}
-              className="bg-white border border-gray-300 rounded-lg p-2"
-            >
-              <option value="">Select Tax Category</option>
-              <option value="Personal">Personal</option>
-              <option value="Business">Business</option>
-              <option value="Corporate">Corporate</option>
-            </select>
+            <div>
+              <select
+                value={taxCategory}
+                onChange={(e) => setTaxCategory(e.target.value)}
+                className={`bg-white border ${errors.taxCategory ? 'border-red-500' : 'border-gray-300'} rounded-lg p-2`}
+              >
+                <option value="">Select Tax Category</option>
+                <option value="Personal">Personal</option>
+                <option value="Business">Business</option>
+                <option value="Corporate">Corporate</option>
+              </select>
+              {errors.taxCategory && <p className="text-red-500 text-sm mt-1">Please select a tax category.</p>}
+            </div>
 
             {/* Search Button */}
             <button
@@ -149,7 +174,7 @@ const LearnAboutTax = () => {
         </div>
       </div>
 
-      {/* Auto-Playing Video */}
+      {/* Display Videos */}
       <div className="bg-gray-100 py-6">
         <div className="container mx-auto">
           <iframe
@@ -169,7 +194,7 @@ const LearnAboutTax = () => {
       <main className="flex-grow flex flex-col items-center bg-gray-100 p-6">
         <h1 className="text-4xl font-bold text-blue-600 mb-6">Learn About Tax</h1>
 
-        {/* Display Videos */}
+        {/* Display Filtered Videos */}
         {filteredVideos.length > 0 ? (
           filteredVideos.map((video, index) => (
             <div key={index} className="mb-8 w-full max-w-2xl">
