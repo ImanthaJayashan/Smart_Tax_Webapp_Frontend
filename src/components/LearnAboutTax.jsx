@@ -93,6 +93,78 @@ const LearnAboutTax = () => {
       paidTaxBefore: 'Yes', // Added this property
       category: 'Personal',
       url: 'https://www.youtube.com/embed/watch?v=nBUu53yhE-o&list=PL_IWrf861Ze6npqqKswnRprjAlq9XExY-&index=6&ab_channel=CAOnlineAcademy'
+    },
+    //taxation of partnerships
+    {
+      title: 'How to tax your sole proprietor business income?',
+      level: 'Beginner',
+      paidTaxBefore: 'No',
+      category: 'Business',
+      url: 'https://www.youtube.com/embed/pJh8M6UqC3k'
+    },
+    {
+      title: 'What type of tax does your company need to pay? -These taxes could affect your company',
+      level: 'Beginner',
+      paidTaxBefore: 'No',
+      category: 'Business',
+      url: 'https://www.youtube.com/embed/6xSD2saaAaY'
+
+    },
+    {
+      title: 'Taxable Business Income',
+      level: 'Beginner',
+      paidTaxBefore: 'Yes',
+      category: 'Business',
+      url: 'https://www.youtube.com/embed/watch?v=I-RztK2zFls&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=6&ab_channel=GayanAbeyrathna'
+    },
+    {
+      title: 'Taxation of Partnerships',
+      level: 'Beginner',
+      paidTaxBefore: 'Yes',
+      category: 'Business',
+      url: 'https://www.youtube.com/embed/watch?v=6MtIsW5eypc&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=7&ab_channel=GayanAbeyrathna'
+    },
+    {
+      title: 'Taxation of Partnerships - Video 1',
+      level: 'Intermediate',
+      paidTaxBefore: 'Yes',
+      category: 'Business',
+      url: 'https://www.youtube.com/embed/watch?v=VxIPIXNzwSs&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=12&ab_channel=GayanAbeyrathna'
+    },
+    {
+      title: 'Taxation of Partnerships - Video 2',
+      level: 'Intermediate',
+      paidTaxBefore: 'Yes',
+      category: 'Business',
+      url: 'https://www.youtube.com/embed/watch?v=mDl4cM1Vuz0&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=13&ab_channel=GayanAbeyrathna'
+    },
+    {
+      title: 'Taxation of Partnerships - Speed Covar',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Business',
+      url: 'https://www.youtube.com/embed/watch?v=mdA9-FRCWCA&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=10&ab_channel=GayanAbeyrathna'
+    },
+    {
+      title: 'Auditing and Taxation of Partnerships',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Business',
+      url: 'https://www.youtube.com/embed/watch?v=VRf0zrDWBKk&list=PLbD4n0GfG53oPY95B-zOaVlFMbsgRshsS&index=9&ab_channel=Simplebooks'
+    },
+    {
+      title: 'Guidance Session BL 7 Business Taxation Curriculum - Video 1',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Business',
+      url: 'https://www.youtube.com/embed/TMpB-92CLRI'
+    },
+    {
+      title: 'Guidance Session BL 7 Business Taxation Curriculum - Video 2',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Business',
+      url: 'https://www.youtube.com/embed/ZNY0_NCHuoM'
     }
     
     
