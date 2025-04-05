@@ -187,7 +187,7 @@ const HomePage = () => {
                 Use our inbuilt smart tax calculator to easily determine how much tax you need to pay. Simply input your details, and the calculator will quickly provide an accurate estimate, making tax calculations effortless.
               </p>
               <button
-                onClick={() => navigate('/filing')} // Navigate to the filing page
+                onClick={() => navigate('/taxcal')} // Navigate to the filing page
                 className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition"
               >
                 Get Started
