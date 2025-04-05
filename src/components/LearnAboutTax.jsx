@@ -165,7 +165,151 @@ const LearnAboutTax = () => {
       paidTaxBefore: 'Yes',
       category: 'Business',
       url: 'https://www.youtube.com/embed/ZNY0_NCHuoM'
+    },
+    {
+      title: 'Corporate Tax ගැන සියල්ල (step by step guide)',
+      level: 'Beginner',
+      paidTaxBefore: 'No',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/watch?v=RS_6Bzm9U4I&list=PLbD4n0GfG53oPY95B-zOaVlFMbsgRshsS&index=4&ab_channel=Simplebooks'
+
+    },
+    {
+      title: 'Corporate Tax - Video 1',
+      level: 'Beginner',
+      paidTaxBefore: 'No',
+      category: 'Corporate',
+      url:'https://www.youtube.com/embed/9elTeuCNKMA'
+
+    },
+    {
+      title: 'Corporate Tax - Video 2',
+      level: 'Beginner',
+      paidTaxBefore: 'No',
+      category: 'Corporate',
+      url:'https://www.youtube.com/embed/tfleKFuoEIM?start=1'
+    },
+    {
+      title: 'Taxation for Companies 1',
+      level: 'Beginner',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/watch?v=1_nxB3ykubc&list=PLT61k8OdDMeOUo_tLsYldtIp3kii7CEQr&index=14&ab_channel=GayanAbeyrathna'
+    },
+    {
+      title: 'Taxation for Companies 2',
+      level: 'Beginner',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/6__klKZjrvw'
+    },
+    {
+      title: 'social security contribution levy 1',
+      level: 'Intermediate',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/OPxMdkifY0c'
+    },
+    {
+      title: 'social security contribution levy 2',
+      level: 'Intermediate',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/t0wtQdUA9-0'
+    },
+    {
+      title: 'social security contribution levy 2',
+      level: 'Intermediate',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/nnis4ac1-M0'
+    },
+    //advanced coparate tax
+    {
+      title: 'Taxation for Companies - Video 1',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/dfEuCv57EHI?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv'
+    },
+    {
+      title: 'Taxation for Companies - Video 2',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/dfEuCv57EHI?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv&index=2'
+    },
+    {
+      title: 'Taxation for Companies - Video 3',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/LMIPno3Rhdo?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv&index=3'
+    },
+    {
+      title: 'Taxation for Companies - Video 4',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/RAGHkls0rKw?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv&index=4'
+    },
+    {
+      title: 'Taxation for Companies - Video 5',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/xd8ik2aYPnI?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv&index=5'
+    },
+    {
+      title: 'Taxation for Companies - Video 6',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/mo7V5uyo7uQ?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv&index=6'
+    },
+    {
+      title: 'Taxation for Companies - Video 7',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/rm2aSr47YK0?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv&index=7'
+    },
+    {
+      title: 'Taxation for Companies - Video 8',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/Yxw0QtiQFgg?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv&index=8'
+    },
+    {
+      title: 'Taxation for Companies - Video 9',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/RJOHUjSE2cI?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv&index=9'
+    },
+    {
+      title: 'Taxation for Companies - Video 10',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/9jugI5eQcfY?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv&index=10'
+    },
+    {
+      title: 'Taxation for Companies - Video 11',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/qT6gWu0mg6A?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv&index=11'
+    },
+    {
+      title: 'Taxation for Companies - Video 12',
+      level: 'Advanced',
+      paidTaxBefore: 'Yes',
+      category: 'Corporate',
+      url: 'https://www.youtube.com/embed/oJsjjAwhLJc?list=PL_IWrf861Ze43AgqqF_rPLTyo1gVFJnFv&index=12'
     }
+
     
     
     // Add more videos with different categories, levels, or tax status here
