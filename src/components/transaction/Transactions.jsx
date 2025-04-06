@@ -102,8 +102,9 @@ const Transactions = () => {
         imageUrl: transaction.imageUrl || null
       };
 
-      const savedTransaction = await transactionApi.create(newTransaction);
-      setTransactions([savedTransaction, ...transactions]);
+      await transactionApi.create(newTransaction);
+      // Refresh data from backend instead of updating local state
+      await fetchTransactions();
     } catch (err) {
       console.error("Failed to add transaction:", err);
       setError("Failed to add transaction. Please try again.");
@@ -130,10 +131,8 @@ const Transactions = () => {
     if (window.confirm('Are you sure you want to delete this transaction?')) {
       try {
         await transactionApi.delete(id);
-        // Filter using either _id or id depending on which exists
-        setTransactions(transactions.filter(transaction => 
-          (transaction._id !== id && transaction.id !== id)
-        ));
+        // Refresh data from backend instead of filtering local state
+        await fetchTransactions();
       } catch (err) {
         console.error("Failed to delete transaction:", err);
         setError("Failed to delete transaction. Please try again.");
@@ -145,7 +144,7 @@ const Transactions = () => {
     try {
       // Use _id or id based on availability
       const transactionId = updatedTransaction._id || updatedTransaction.id;
-      const result = await transactionApi.update(
+      await transactionApi.update(
         transactionId, 
         {
           date: updatedTransaction.date,
@@ -156,13 +155,8 @@ const Transactions = () => {
         }
       );
       
-      // Update using either _id or id depending on what's returned
-      setTransactions(transactions.map(transaction =>
-        (transaction._id === result._id || transaction.id === result._id || 
-         transaction._id === result.id || transaction.id === result.id) 
-          ? result 
-          : transaction
-      ));
+      // Refresh data from backend instead of updating local state
+      await fetchTransactions();
       setEditingTransaction(null);
     } catch (err) {
       console.error("Failed to update transaction:", err);
