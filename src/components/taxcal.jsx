@@ -411,6 +411,8 @@ const TaxCal = () => {
         {showDetails && (
           <div className="w-full lg:w-1/2 bg-white p-6 rounded shadow-md">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">Rules and Regulations</h2>
+
+            {/* Income Tax Section */}
             {taxType === 'income' && (
               <div className="text-gray-600">
                 <p>
@@ -432,65 +434,90 @@ const TaxCal = () => {
                   <strong>Income Tax Description:</strong> <br />
                   In respect of a person who is deemed to be resident in Sri Lanka, income tax is chargeable on income from Sri Lanka and income derived from outside Sri Lanka. The liability to income tax therefore extends to global income. A person who is deemed to be non-resident in Sri Lanka is chargeable with income tax only on the gains and profits arising or derived from Sri Lanka.​​
                 </p>
+              </div>
+            )}
+
+            {/* VAT Section */}
+            {taxType === 'vat' && (
+              <div className="text-gray-600">
+                <p>
+                  <strong>Value Added Tax (VAT)</strong> <br />
+                  Value Added Tax (VAT) is introduced by the Act No. 14 of 2002 and is in force from 1st August, 2002. VAT Act replaced the Goods and Services Tax (GST), which was almost similar tax on the consumption of goods and services.
+                </p>
                 <br />
                 <p>
-                  An individual who is a resident in Sri Lanka for a year of assessment, or who is a non-resident in Sri Lanka for a year of assessment but is a citizen of Sri Lanka, will receive an aggregate relief of:
+                  It is a tax on domestic consumption of goods and services. The goods imported into Sri Lanka and goods and services supplied within the territorial limits of Sri Lanka are the subject matter of this tax. It is a multi-stage tax levied on the incremental Value at every stage in the production and distribution chain of Goods and Services. The tax is borne by the final or the ultimate consumer of Goods or services. It is an indirect tax and the Government will receive at the end, through all the intermediary suppliers in the chain of production and distribution, an amount equal to the amount paid by the final consumer.
+                </p>
+                <br />
+                <p>
+                  There are certain supplies of goods and services exempt from VAT. (As mentioned in the Part II of the First Schedule of VAT Act)
+                </p>
+                <br />
+                <p>
+                  <strong>Chargeability for Value Added Tax excluding chargeability on Financial Services:</strong>
                 </p>
                 <ul className="list-disc list-inside mt-2">
-                  <li>Rs. 500,000 for each year of assessment prior to January 1, 2020.</li>
-                  <li>Rs. 3,000,000 for each year of assessment commencing on or after January 1, 2020.</li>
+                  <li>Manufactures</li>
+                  <li>Importers</li>
+                  <li>Service providers</li>
+                  <li>Suppliers who supply goods under tender agreement</li>
+                  <li>Wholesale and Retail Trade</li>
                 </ul>
                 <br />
                 <p>
-                  However, an individual who is a trustee, receiver, executor, or liquidator shall not be entitled to deduct this personal relief as such trustee, receiver, executor, or liquidator. Additionally, the relief shall not be deducted against gains from the realization of investment assets.​​
+                  <strong>Registration Threshold:</strong> <br />
+                  Value of taxable supply of goods or services other than financial services by any person including wholesale and retail trade (with effect from 01.01.2024):
+                </p>
+                <ul className="list-disc list-inside mt-2">
+                  <li>Exceeds Rs. 15 million for a quarter</li>
+                  <li>Exceeds Rs. 60 million for a 12-month period</li>
+                </ul>
+                <br />
+                <p>
+                  <strong>VAT Rates:</strong>
+                </p>
+                <ul className="list-disc list-inside mt-2">
+                  <li>Zero Rate (0%) - Exports</li>
+                  <li>Standard Rate - 18% (from 01.01.2024)</li>
+                </ul>
+                <br />
+                <p>
+                  <strong>Responsibilities of a Registered Person:</strong>
+                </p>
+                <ul className="list-disc list-inside mt-2">
+                  <li>Display the Certificate of Registration at a clearly visible place in the business premises.</li>
+                  <li>Issue tax invoices (to other registered persons).</li>
+                  <li>Keep accounts for relevant periods.</li>
+                  <li>Pay taxes and furnish returns on or before due dates.</li>
+                </ul>
+              </div>
+            )}
+
+            {/* PAYE Section */}
+            {taxType === 'paye' && (
+              <div className="text-gray-600">
+                <p>
+                  <strong>Pay As You Earn Tax (PAYE)</strong> <br />
+                  In terms of Section 114 of the Inland Revenue Act No. 10 of 2006 or Section 83 of the Inland Revenue Act No. 24 of 2017 (from 1st April, 2018), Employers are required to deduct Income Tax on Employment Income of employees at the time of payment of remuneration.
                 </p>
                 <br />
                 <p>
-                  <strong>Income Tax Installments:</strong>
+                  For this purpose, the Commissioner General of Inland Revenue specifies Tax Tables which are to be used in making such tax deductions. Since the Tax is paid at the time of earning the remuneration, this system is called the Pay-As-You-Earn System (PAYE).
                 </p>
-                <table className="w-full border-collapse border border-gray-300 mt-4">
-                  <thead>
-                    <tr className="bg-gray-100">
-                      <th className="border border-gray-300 px-4 py-2 text-left">Installment</th>
-                      <th className="border border-gray-300 px-4 py-2 text-left">Payment Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2">1st Installment</td>
-                      <td className="border border-gray-300 px-4 py-2">On or before the 15th day of the month of August, of that year of assessment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2">2nd Installment</td>
-                      <td className="border border-gray-300 px-4 py-2">On or before the 15th day of the month of November, of that year of assessment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2">3rd Installment</td>
-                      <td className="border border-gray-300 px-4 py-2">On or before the 15th day of the month of February, of that year of assessment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2">4th Installment</td>
-                      <td className="border border-gray-300 px-4 py-2">On or before the 15th day of the month of May, of the next succeeding year of assessment</td>
-                    </tr>
-                    <tr>
-                      <td className="border border-gray-300 px-4 py-2">Final Installment</td>
-                      <td className="border border-gray-300 px-4 py-2">On or before the date that is after six months end, of that year of assessment</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <br />
+                <p>
+                  <strong>Payment of Tax:</strong> <br />
+                  Every employer has an obligation to deduct PAYE Tax from the Employee as per PAYE tax tables, and the total deducted amount should be remitted to the department on or before the 15th of the following month.
+                </p>
+                <br />
+                <p>
+                  <strong>Furnishing PAYE Returns:</strong> <br />
+                  <strong>Due date:</strong> Return of PAYE Tax (PAYE) for a relevant Assessment Year should be furnished on or before the 30th day of the month of April of the following Assessment Year.
+                </p>
+                <p>
+                  <strong>Submit to:</strong> Central Document Management Unit (CDMU), 1st Floor of Inland Revenue building.
+                </p>
               </div>
-            )}
-            {taxType === 'vat' && (
-              <p className="text-gray-600">
-                <strong>Value Added Tax (VAT)</strong> <br />
-                VAT is introduced by the Act No. 14 of 2002 and has been in force since August 1, 2002. It replaced the Goods and Services Tax (GST), which was a similar tax on the consumption of goods and services.
-              </p>
-            )}
-            {taxType === 'paye' && (
-              <p className="text-gray-600">
-                <strong>Pay As You Earn (PAYE) Tax</strong> <br />
-                In terms of Section 114 of the Inland Revenue Act No. 10 of 2006 or Section 83 of the Inland Revenue Act No. 24 of 2017 (from April 1, 2018), employers are required to deduct income tax on employment income of employees at the time of payment of remuneration.
-              </p>
             )}
           </div>
         )}
