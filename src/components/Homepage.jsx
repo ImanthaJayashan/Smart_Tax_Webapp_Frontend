@@ -22,6 +22,7 @@ const HomePage = () => {
               <li><a href="#" className="hover:text-gray-300">About</a></li>
               <li><a href="#" className="hover:text-gray-300">Services</a></li>
               <li><a href="#" className="hover:text-gray-300">Contact</a></li>
+              <li><a href="/transactions" className="hover:text-gray-300">Transactions</a></li>
             </ul>
             {/* Search Bar */}
             <div className="relative">
