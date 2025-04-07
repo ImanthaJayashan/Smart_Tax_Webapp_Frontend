@@ -29,22 +29,35 @@ const TaxCal = () => {
     if (taxType === 'income') {
       const incomeValue = parseFloat(income);
       totalAmount = incomeValue;
-      if (incomeValue <= 300000) {
-        details = `No tax to pay for LKR ${incomeValue}.`;
+
+      if (incomeValue <= 3000000) {
         calculatedTax = 0;
-      } else {
-        const taxRate = 0.06; // Example rate for income tax above 300,000 LKR
-        calculatedTax = incomeValue * taxRate;
+        details = `No income tax for LKR ${incomeValue}.`;
+      } else if (incomeValue <= 3500000) {
+        calculatedTax = (incomeValue - 3000000) * 0.06;
         details = `Income tax for LKR ${incomeValue} is calculated at 6%.`;
+      } else if (incomeValue <= 4000000) {
+        calculatedTax = (incomeValue - 3500000) * 0.12 + 30000;
+        details = `Income tax for LKR ${incomeValue} is calculated at 12%.`;
+      } else if (incomeValue <= 4500000) {
+        calculatedTax = (incomeValue - 4000000) * 0.18 + 60000;
+        details = `Income tax for LKR ${incomeValue} is calculated at 18%.`;
+      } else if (incomeValue <= 5000000) {
+        calculatedTax = (incomeValue - 4500000) * 0.24 + 120000;
+        details = `Income tax for LKR ${incomeValue} is calculated at 24%.`;
+      } else {
+        calculatedTax = (incomeValue - 5000000) * 0.30 + 240000;
+        details = `Income tax for LKR ${incomeValue} is calculated at 30%.`;
       }
     } else if (taxType === 'vat') {
       const priceValue = parseFloat(price);
       totalAmount = priceValue;
+
       if (priceValue <= 0) {
-        details = `No tax to pay for LKR ${priceValue}.`;
         calculatedTax = 0;
+        details = `No VAT for LKR ${priceValue}.`;
       } else {
-        const vatRate = 0.15; // Example VAT rate (15%)
+        const vatRate = 0.15; // Standard VAT rate (15%)
         calculatedTax = priceValue * vatRate;
         details = `VAT for LKR ${priceValue} is calculated at 15%.`;
       }
@@ -52,7 +65,6 @@ const TaxCal = () => {
       const salary = parseFloat(income);
       totalAmount = salary;
 
-      // PAYE tax calculation for Sri Lanka
       if (salary <= 3000000) {
         calculatedTax = 0;
         details = `No PAYE tax for an annual salary of LKR ${salary}.`;
@@ -66,11 +78,23 @@ const TaxCal = () => {
         calculatedTax = (salary - 4000000) * 0.18 + 60000;
         details = `PAYE tax for LKR ${salary} is calculated at 18%.`;
       } else if (salary <= 5000000) {
-        calculatedTax = (salary - 4500000) * 0.24 + 90000;
+        calculatedTax = (salary - 4500000) * 0.24 + 120000;
         details = `PAYE tax for LKR ${salary} is calculated at 24%.`;
       } else {
-        calculatedTax = (salary - 5000000) * 0.30 + 120000;
+        calculatedTax = (salary - 5000000) * 0.30 + 240000;
         details = `PAYE tax for LKR ${salary} is calculated at 30%.`;
+      }
+    } else if (taxType === 'sscl') {
+      const turnover = parseFloat(income); // Assuming income is used for SSCL turnover
+      totalAmount = turnover;
+
+      if (turnover <= 0) {
+        calculatedTax = 0;
+        details = `No SSCL for LKR ${turnover}.`;
+      } else {
+        const ssclRate = 0.025; // SSCL rate (2.5%)
+        calculatedTax = turnover * ssclRate;
+        details = `SSCL for LKR ${turnover} is calculated at 2.5%.`;
       }
     }
 
@@ -102,6 +126,8 @@ const TaxCal = () => {
       doc.text(`Income/Salary: LKR ${income}`, 10, 45);
     } else if (taxType === "vat") {
       doc.text(`Item Price: LKR ${price}`, 10, 45);
+    } else if (taxType === "sscl") {
+      doc.text(`Turnover: LKR ${income}`, 10, 45);
     }
 
     // Add tax amount and percentage
@@ -112,29 +138,28 @@ const TaxCal = () => {
     doc.setFont("helvetica", "italic");
     doc.text(`Details: ${taxDetails}`, 10, 75);
 
-    // Add table for income tax installments (if applicable)
-    if (taxType === "income" && amountToPay > 0) {
+    // Add SSCL Payment Schedule Table (if applicable)
+    if (taxType === "sscl" && amountToPay > 0) {
       doc.setFont("helvetica", "bold");
-      doc.text("Income Tax Installments:", 10, 85);
+      doc.text("SSCL Payment Schedule:", 10, 85);
 
       const tableData = [
-        ["Installment", "Payment Date", "Amount (LKR)"],
-        ["1st Installment", "On or before the 15th day of August", (amountToPay * 0.25).toFixed(2)],
-        ["2nd Installment", "On or before the 15th day of November", (amountToPay * 0.25).toFixed(2)],
-        ["3rd Installment", "On or before the 15th day of February", (amountToPay * 0.25).toFixed(2)],
-        ["4th Installment", "On or before the 15th day of May", (amountToPay * 0.15).toFixed(2)],
-        ["Final Installment", "On or before six months after year-end", (amountToPay * 0.10).toFixed(2)],
+        ["Month", "Payment Date", "Amount (LKR)"],
+        ["First month of the quarter", "On or before the 20th ", (amountToPay / 3).toFixed(2)],
+        ["Second month of the quarter", "On or before the 20th ", (amountToPay / 3).toFixed(2)],
+        ["Third month of the quarter", "On or before the 20th ", (amountToPay / 3).toFixed(2)],
       ];
 
-      let y = 95;
-      doc.setFont("helvetica", "normal");
+      let y = 95; // Starting Y position for the table
       tableData.forEach((row, index) => {
         if (index === 0) {
-          doc.setFont("helvetica", "bold");
+          doc.setFont("helvetica", "bold"); // Header row
         } else {
-          doc.setFont("helvetica", "normal");
+          doc.setFont("helvetica", "normal"); // Data rows
         }
-        doc.text(row.join(" | "), 10, y);
+        doc.text(row[0], 10, y); // Month
+        doc.text(row[1], 60, y); // Payment Date
+        doc.text(row[2], 180, y, null, null, "right"); // Amount
         y += 10;
       });
     }
@@ -222,6 +247,7 @@ const TaxCal = () => {
               <option value="income">Income Tax</option>
               <option value="vat">VAT</option>
               <option value="paye">PAYE Tax</option>
+              <option value="sscl">SSCL (Social Security Contribution Levy)</option> {/* New Option */}
             </select>
             {taxTypeError && <p className="text-red-500 text-sm mt-1">Please select a tax type.</p>} {/* Error message */}
           </div>
@@ -292,6 +318,29 @@ const TaxCal = () => {
               />
               {!income && taxType === 'paye' && (
                 <p className="text-red-500 text-sm mt-1">Please enter a valid salary.</p>
+              )}
+            </div>
+          )}
+
+          {taxType === 'sscl' && (
+            <div className="w-full max-w-md mb-6 mx-auto">
+              <label className="block text-lg font-medium text-gray-700 mb-2">Enter Turnover (LKR):</label>
+              <input
+                type="number"
+                value={income} // Reusing the `income` state for turnover
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (value < 0) {
+                    alert("Turnover cannot be negative.");
+                    setIncome('');
+                  } else {
+                    setIncome(value);
+                  }
+                }}
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+              {!income && taxType === 'sscl' && (
+                <p className="text-red-500 text-sm mt-1">Please enter a valid turnover.</p>
               )}
             </div>
           )}
@@ -390,6 +439,39 @@ const TaxCal = () => {
                         <td className="border border-gray-300 px-4 py-2">Final Installment</td>
                         <td className="border border-gray-300 px-4 py-2">On or before the date that is after six months end, of that year of assessment</td>
                         <td className="border border-gray-300 px-4 py-2">{(amountToPay * 0.10).toFixed(2)}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              )}
+
+              {/* SSCL Payment Schedule Table */}
+              {taxType === 'sscl' && (
+                <div className="mt-6">
+                  <h3 className="text-lg font-semibold text-gray-700 mb-4">SSCL Payment Schedule</h3>
+                  <table className="w-full border-collapse border border-gray-300">
+                    <thead>
+                      <tr className="bg-gray-100">
+                        <th className="border border-gray-300 px-4 py-2 text-left">Month</th>
+                        <th className="border border-gray-300 px-4 py-2 text-left">Payment Date</th>
+                        <th className="border border-gray-300 px-4 py-2 text-left">Amount (LKR)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="border border-gray-300 px-4 py-2">First month of the quarter</td>
+                        <td className="border border-gray-300 px-4 py-2">On or before the 20th day of the second month of the relevant quarter</td>
+                        <td className="border border-gray-300 px-4 py-2">{(amountToPay / 3).toFixed(2)}</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-gray-300 px-4 py-2">Second month of the quarter</td>
+                        <td className="border border-gray-300 px-4 py-2">On or before the 20th day of the third month of the relevant quarter</td>
+                        <td className="border border-gray-300 px-4 py-2">{(amountToPay / 3).toFixed(2)}</td>
+                      </tr>
+                      <tr>
+                        <td className="border border-gray-300 px-4 py-2">Third month of the quarter</td>
+                        <td className="border border-gray-300 px-4 py-2">On or before the 20th day of the month immediately succeeding the end of the relevant quarter</td>
+                        <td className="border border-gray-300 px-4 py-2">{(amountToPay / 3).toFixed(2)}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -516,6 +598,87 @@ const TaxCal = () => {
                 </p>
                 <p>
                   <strong>Submit to:</strong> Central Document Management Unit (CDMU), 1st Floor of Inland Revenue building.
+                </p>
+              </div>
+            )}
+
+            {/* SSCL Section */}
+            {taxType === 'sscl' && (
+              <div className="text-gray-600">
+                <p>
+                  <strong>Social Security Contribution Levy (SSCL)</strong> <br />
+                  Social Security Contribution Levy (SSCL) has been imposed with effect from October 01, 2022 by the Social Security Contribution Levy Act, No. 25 of 2022. Every registered person shall account for the levy on an accrual basis.
+                </p>
+                <br />
+                <p>
+                  <strong>Scope of Liability:</strong>
+                </p>
+                <ul className="list-disc list-inside mt-2">
+                  <li>Imports any article</li>
+                  <li>Carries on the business of manufacture of any article</li>
+                  <li>Carries on the business of providing a service of any description</li>
+                  <li>Carries on the business of wholesale or retail sale of any article</li>
+                </ul>
+                <br />
+                <p>
+                  <strong>Turnover:</strong> <br />
+                  Turnover has been defined in relation to respective categories of persons to whom the SSCL Act is applicable:
+                </p>
+                <ul className="list-disc list-inside mt-2">
+                  <li>
+                    <strong>Importation of any article:</strong> The value of the article ascertained for the purpose of the Value Added Tax under section 6 of the Value Added Tax Act, No. 14 of 2002.
+                  </li>
+                  <li>
+                    <strong>Manufacture of any article:</strong> The sum receivable, whether received or not, in that quarter, of any article manufactured and sold in Sri Lanka.
+                  </li>
+                  <li>
+                    <strong>Providing a service:</strong> The sum receivable, whether received or not, from the supply in Sri Lanka of any financial services or other services.
+                  </li>
+                  <li>
+                    <strong>Wholesale or retail sale:</strong> The sum receivable, whether received or not, in that quarter, from the wholesale or retail sale of any article in Sri Lanka.
+                  </li>
+                </ul>
+                <br />
+                <p>
+                  <strong>Registration Threshold:</strong> <br />
+                  The aggregate turnover for a quarter exceeds Rs. 15 million or for a period of four consecutive quarters exceeds Rs. 60 million.
+                </p>
+                <br />
+                <p>
+                  <strong>Chargeability:</strong> <br />
+                  SSCL shall be charged at the rate of 2.5% on the liable turnover.
+                </p>
+                <br />
+                <p>
+                  <strong>Payment of SSCL on Self-Assessment Basis:</strong> <br />
+                  SSCL is payable on a self-assessment basis monthly. The due dates are as follows:
+                </p>
+                <table className="w-full border-collapse border border-gray-300 mt-4">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="border border-gray-300 px-4 py-2 text-left">Month</th>
+                      <th className="border border-gray-300 px-4 py-2 text-left">Payment Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="border border-gray-300 px-4 py-2">First month of the quarter</td>
+                      <td className="border border-gray-300 px-4 py-2">On or before the 20th day of the second month of the relevant quarter</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 px-4 py-2">Second month of the quarter</td>
+                      <td className="border border-gray-300 px-4 py-2">On or before the 20th day of the third month of the relevant quarter</td>
+                    </tr>
+                    <tr>
+                      <td className="border border-gray-300 px-4 py-2">Third month of the quarter</td>
+                      <td className="border border-gray-300 px-4 py-2">On or before the 20th day of the month immediately succeeding the end of the relevant quarter</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br />
+                <p>
+                  <strong>Furnishing SSCL Returns:</strong> <br />
+                  Every registered person shall furnish to the Commissioner General a return in writing for every quarter on or before the 20th day of the month after the end of each relevant quarter.
                 </p>
               </div>
             )}
