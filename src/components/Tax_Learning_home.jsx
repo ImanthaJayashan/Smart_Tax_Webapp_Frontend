@@ -145,7 +145,7 @@ const HomePage = () => {
                 Discover all the tax forms you need quickly and easily, without any confusion or frustration.
               </p>
               <button
-                onClick={() => navigate('/explore')} // Navigate to the explore page
+                onClick={() => navigate('/taxform')} // Navigate to the explore page
                 className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600 transition"
               >
                 Explore
