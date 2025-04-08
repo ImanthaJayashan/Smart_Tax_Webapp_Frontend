@@ -6,6 +6,8 @@ const TaxForm = () => {
   const [activeSection, setActiveSection] = useState('Individual'); // State to track active section
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(false); // State to toggle Registration section
   const [isReturnsOpen, setIsReturnsOpen] = useState(false); // State to toggle Returns of Income section
+  const [isIssuesOpen, setIsIssuesOpen] = useState(false); // State to toggle Issues of Shares section
+  const [isSpecialTaxesOpen, setIsSpecialTaxesOpen] = useState(false); // State to toggle Special Taxes section
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -291,6 +293,264 @@ const TaxForm = () => {
             <div>
               <h2 className="text-2xl font-bold text-green-600 mb-4">Partnership Tax Form</h2>
               <p className="text-gray-700">This section is for partnerships to fill out their tax forms.</p>
+
+              {/* Registration Section */}
+              <div className="mt-6">
+                <button
+                  onClick={() => setIsRegistrationOpen(!isRegistrationOpen)}
+                  className="w-full bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition text-left"
+                >
+                  {isRegistrationOpen ? 'Hide Registration' : 'Show Registration'}
+                </button>
+
+                {isRegistrationOpen && (
+                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* TAXPAYER REGISTRATION */}
+                    <div className="flex flex-col items-center">
+                      <h3 className="text-xl font-bold text-gray-800 mb-4">TAXPAYER REGISTRATION</h3>
+                      <a
+                        href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                          alt="PDF Icon"
+                          className="w-32 h-32 mb-4"
+                        />
+                      </a>
+                      <a
+                        href="https://www.ird.gov.lk/en/Downloads/TaxpayerRegistrationDocs/TPR_003_E.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+                      >
+                        Open Form
+                      </a>
+                    </div>
+
+                    {/* CHANGE TAXPAYER REGISTRATION */}
+                    <div className="flex flex-col items-center">
+                      <h3 className="text-xl font-bold text-gray-800 mb-4">CHANGE TAXPAYER REGISTRATION</h3>
+                      <a
+                        href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                          alt="PDF Icon"
+                          className="w-32 h-32 mb-4"
+                        />
+                      </a>
+                      <a
+                        href="https://www.ird.gov.lk/en/Downloads/TaxpayerRegistrationDocs/TPR_009_E.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+                      >
+                        Open Form
+                      </a>
+                    </div>
+
+                    {/* Add/Remove/Update of Proprietorship details */}
+                    <div className="flex flex-col items-center">
+                      <h3 className="text-xl font-bold text-gray-800 mb-4">Add/Remove/Update of Proprietorship details</h3>
+                      <a
+                        href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                          alt="PDF Icon"
+                          className="w-32 h-32 mb-4"
+                        />
+                      </a>
+                      <a
+                        href="https://www.ird.gov.lk/en/Downloads/TaxpayerRegistrationDocs/TPR_013_E.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+                      >
+                        Open Form
+                      </a>
+                    </div>
+
+                    {/* Change Tax Type */}
+                    <div className="flex flex-col items-center">
+                      <h3 className="text-xl font-bold text-gray-800 mb-4">Change Tax Type</h3>
+                      <a
+                        href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                          alt="PDF Icon"
+                          className="w-32 h-32 mb-4"
+                        />
+                      </a>
+                      <a
+                        href="https://www.ird.gov.lk/en/Downloads/TaxpayerRegistrationDocs/TPR_012_E.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+                      >
+                        Open Form
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Issues of Shares Section */}
+              <div className="mt-6">
+                <button
+                  onClick={() => setIsIssuesOpen(!isIssuesOpen)}
+                  className="w-full bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition text-left"
+                >
+                  {isIssuesOpen ? 'Hide Issues of Shares' : 'Show Issues of Shares'}
+                </button>
+
+                {isIssuesOpen && (
+                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* Issue of Shares */}
+                    <div className="flex flex-col items-center">
+                      <h3 className="text-xl font-bold text-gray-800 mb-4">Issue of Shares</h3>
+                      <a
+                        href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                          alt="PDF Icon"
+                          className="w-32 h-32 mb-4"
+                        />
+                      </a>
+                      <a
+                        href="https://www.ird.gov.lk/en/publications/Unit%20Profiles_Tax%20Payer%20Service%20Unit/Form_Shares_Issue.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+                      >
+                        Open Form
+                      </a>
+                    </div>
+
+                    {/* Transfer of Shares */}
+                    <div className="flex flex-col items-center">
+                      <h3 className="text-xl font-bold text-gray-800 mb-4">Transfer of Shares</h3>
+                      <a
+                        href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                          alt="PDF Icon"
+                          className="w-32 h-32 mb-4"
+                        />
+                      </a>
+                      <a
+                        href="https://www.ird.gov.lk/en/publications/Unit%20Profiles_Tax%20Payer%20Service%20Unit/Form_Shares_Transfer.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+                      >
+                        Open Form
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Special Taxes Section */}
+              <div className="mt-6">
+                <button
+                  onClick={() => setIsSpecialTaxesOpen(!isSpecialTaxesOpen)}
+                  className="w-full bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition text-left"
+                >
+                  {isSpecialTaxesOpen ? 'Hide Special Taxes' : 'Show Special Taxes'}
+                </button>
+
+                {isSpecialTaxesOpen && (
+                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {/* Land Tax Payments */}
+                    <div className="flex flex-col items-center">
+                      <h3 className="text-xl font-bold text-gray-800 mb-4">Land Tax Payments</h3>
+                      <a
+                        href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                          alt="PDF Icon"
+                          className="w-32 h-32 mb-4"
+                        />
+                      </a>
+                      <a
+                        href="https://www.ird.gov.lk/en/publications/Unit%20Profiles_Tax%20Payer%20Service%20Unit/Form_Land_Tax.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+                      >
+                        Open Form
+                      </a>
+                    </div>
+
+                    {/* Stamp Duty */}
+                    <div className="flex flex-col items-center">
+                      <h3 className="text-xl font-bold text-gray-800 mb-4">Stamp Duty</h3>
+                      <a
+                        href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                          alt="PDF Icon"
+                          className="w-32 h-32 mb-4"
+                        />
+                      </a>
+                      <a
+                        href="https://www.ird.gov.lk/en/publications/Unit%20Profiles_Tax%20Payer%20Service%20Unit/Form_SD_Registration.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+                      >
+                        Open Form
+                      </a>
+                    </div>
+
+                    {/* Stamp Duty Payments */}
+                    <div className="flex flex-col items-center">
+                      <h3 className="text-xl font-bold text-gray-800 mb-4">Stamp Duty Payments</h3>
+                      <a
+                        href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
+                          alt="PDF Icon"
+                          className="w-32 h-32 mb-4"
+                        />
+                      </a>
+                      <a
+                        href="https://www.ird.gov.lk/en/publications/Unit%20Profiles_Tax%20Payer%20Service%20Unit/Form_SD_Lease_Rent_And_Other.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+                      >
+                        Open Form
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           )}
           {activeSection === 'Company' && (
