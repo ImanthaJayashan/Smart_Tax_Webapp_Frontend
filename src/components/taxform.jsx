@@ -1173,10 +1173,10 @@ const TaxForm = () => {
                 </button>
 
                 {isEscOpen && (
-                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Return of Economic Service Charge */}
-                    <div className="flex flex-col items-center">
-                      <h3 className="text-xl font-bold text-gray-800 mb-4">Return of Economic Service Charge</h3>
+                    <div className="flex flex-col items-center text-center">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-2">Return of Economic Service Charge</h3>
                       <a
                         href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                         target="_blank"
@@ -1185,22 +1185,22 @@ const TaxForm = () => {
                         <img
                           src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                           alt="PDF Icon"
-                          className="w-32 h-32 mb-4"
+                          className="w-20 h-20 mb-2"
                         />
                       </a>
                       <a
                         href="https://www.ird.gov.lk/en/Downloads/Other_ESC_Doc/ASMT_ESC_20_E.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
                       >
                         Open Form
                       </a>
                     </div>
 
                     {/* Guide to Filling (ESC) */}
-                    <div className="flex flex-col items-center">
-                      <h3 className="text-xl font-bold text-gray-800 mb-4">Guide to Filling (ESC)</h3>
+                    <div className="flex flex-col items-center text-center">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-2">Guide to Filling (ESC)</h3>
                       <a
                         href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                         target="_blank"
@@ -1209,14 +1209,14 @@ const TaxForm = () => {
                         <img
                           src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                           alt="PDF Icon"
-                          className="w-32 h-32 mb-4"
+                          className="w-20 h-20 mb-2"
                         />
                       </a>
                       <a
                         href="https://www.ird.gov.lk/en/Downloads/Other_ESC_Doc/ASMT_ESC_Guide_1920_E.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
                       >
                         Open Form
                       </a>
@@ -1235,10 +1235,10 @@ const TaxForm = () => {
                 </button>
 
                 {isStOpen && (
-                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Surcharge Tax Return */}
-                    <div className="flex flex-col items-center">
-                      <h3 className="text-xl font-bold text-gray-800 mb-4">Surcharge Tax Return</h3>
+                    <div className="flex flex-col items-center text-center">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-2">Surcharge Tax Return</h3>
                       <a
                         href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                         target="_blank"
@@ -1247,22 +1247,22 @@ const TaxForm = () => {
                         <img
                           src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                           alt="PDF Icon"
-                          className="w-32 h-32 mb-4"
+                          className="w-20 h-20 mb-2"
                         />
                       </a>
                       <a
                         href="https://www.ird.gov.lk/en/Downloads/Other_SurT_Doc/Asmt_SURT_001_E.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
                       >
                         Open Form
                       </a>
                     </div>
 
                     {/* Guide to Surcharge Tax Return */}
-                    <div className="flex flex-col items-center">
-                      <h3 className="text-xl font-bold text-gray-800 mb-4">Guide to Surcharge Tax Return</h3>
+                    <div className="flex flex-col items-center text-center">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-2">Guide to Surcharge Tax Return</h3>
                       <a
                         href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                         target="_blank"
@@ -1271,14 +1271,14 @@ const TaxForm = () => {
                         <img
                           src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                           alt="PDF Icon"
-                          className="w-32 h-32 mb-4"
+                          className="w-20 h-20 mb-2"
                         />
                       </a>
                       <a
                         href="https://www.ird.gov.lk/en/Downloads/Other_SurT_Doc/ST_Return_Guide_E.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
                       >
                         Open Form
                       </a>
@@ -1335,10 +1335,10 @@ const TaxForm = () => {
                 </button>
 
                 {isCgtOpen && (
-                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* CGT Return Form */}
-                    <div className="flex flex-col items-center">
-                      <h3 className="text-xl font-bold text-gray-800 mb-4">CGT Return Form</h3>
+                    <div className="flex flex-col items-center text-center">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-2">CGT Return Form</h3>
                       <a
                         href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                         target="_blank"
@@ -1347,22 +1347,22 @@ const TaxForm = () => {
                         <img
                           src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                           alt="PDF Icon"
-                          className="w-32 h-32 mb-4"
+                          className="w-20 h-20 mb-2"
                         />
                       </a>
                       <a
                         href="https://www.ird.gov.lk/en/Downloads/IT_CGT_Doc/Asmt_CGT_001_E.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
                       >
                         Open Form
                       </a>
                     </div>
 
                     {/* Schedule of CGT Return */}
-                    <div className="flex flex-col items-center">
-                      <h3 className="text-xl font-bold text-gray-800 mb-4">Schedule of CGT Return</h3>
+                    <div className="flex flex-col items-center text-center">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-2">Schedule of CGT Return</h3>
                       <a
                         href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                         target="_blank"
@@ -1371,14 +1371,14 @@ const TaxForm = () => {
                         <img
                           src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/PDF_file_icon.svg/1200px-PDF_file_icon.svg.png"
                           alt="PDF Icon"
-                          className="w-32 h-32 mb-4"
+                          className="w-20 h-20 mb-2"
                         />
                       </a>
                       <a
                         href="https://www.ird.gov.lk/en/Downloads/IT_CGT_Doc/Asmt_CGT_002_E.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+                        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
                       >
                         Open Form
                       </a>
@@ -1393,7 +1393,7 @@ const TaxForm = () => {
 
       {/* Footer */}
       <footer style={{ backgroundColor: '#2b2d78' }} className="text-white p-4">
-        <div className="container mx-auto text-center">
+        <div class="container mx-auto text-center">
           <p>&copy; 2025 Smart Tax. All rights reserved.</p>
         </div>
       </footer>
