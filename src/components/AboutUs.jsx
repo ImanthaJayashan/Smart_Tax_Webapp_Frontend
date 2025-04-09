@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const AboutUs = () => {
   const [showFeedbackForm, setShowFeedbackForm] = useState(false);
@@ -14,19 +15,56 @@ const AboutUs = () => {
 
   const handleSubmitFeedback = () => {
     if (!feedback.trim()) {
-      setError('Feedback cannot be empty.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Feedback cannot be empty.',
+      });
       return;
     }
 
     if (feedback.trim().length < 10) {
-      setError('Feedback must be at least 10 characters long.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Feedback must be at least 10 characters long.',
+      });
       return;
     }
 
-    setFeedbackList([
-      ...feedbackList,
-      { name: 'Anonymous', text: feedback, replies: [], isEditing: false },
-    ]);
+    if (editingIndex !== null) {
+      // Update existing feedback
+      const updatedFeedbackList = [...feedbackList];
+      updatedFeedbackList[editingIndex].text = feedback;
+      updatedFeedbackList[editingIndex].isEditing = false;
+      setFeedbackList(updatedFeedbackList);
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Feedback updated successfully.',
+      });
+    } else if (replyingIndex !== null) {
+      // Add reply to feedback
+      const updatedFeedbackList = [...feedbackList];
+      updatedFeedbackList[replyingIndex].replies.push(feedback);
+      setFeedbackList(updatedFeedbackList);
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Reply added successfully.',
+      });
+    } else {
+      // Add new feedback
+      setFeedbackList([
+        ...feedbackList,
+        { name: 'Anonymous', text: feedback, replies: [], isEditing: false },
+      ]);
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Feedback added successfully.',
+      });
+    }
     setFeedback(''); // Clear the text area
     setShowFeedbackForm(false); // Hide the form after submission
     setError(''); // Clear error
