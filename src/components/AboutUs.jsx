@@ -61,38 +61,43 @@ const AboutUs = () => {
       setLoading(true);
       
       if (editingId) {
-        // Log the update attempt
         console.log('Updating feedback:', {
           id: editingId,
           text: feedback
         });
         
-        // Call the update API
         const updatedFeedback = await updateExistingFeedback(editingId, {
           text: feedback
         });
         
-        // Log the response
         console.log('Update response:', updatedFeedback);
         
         // Refresh the feedback list
         await fetchFeedbacks();
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Feedback updated successfully',
+        });
       } else {
         await createNewFeedback({ text: feedback });
+        await fetchFeedbacks();
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Feedback added successfully',
+        });
       }
 
-      // Reset form state
+      // Reset all form states
       setFeedback('');
       setShowFeedbackForm(false);
       setEditingId(null);
       setEditingIndex(null);
+      setError('');
 
-      // Show success message
-      Swal.fire({
-        icon: 'success',
-        title: 'Success',
-        text: editingId ? 'Feedback updated successfully' : 'Feedback added successfully',
-      });
     } catch (error) {
       console.error('Submit error:', error);
       Swal.fire({
@@ -299,27 +304,7 @@ const AboutUs = () => {
                   Cancel
                 </button>
                 <button
-                  onClick={() => {
-                    if (editingIndex !== null) {
-                      // Update existing feedback
-                      const updatedFeedbackList = [...feedbackList];
-                      updatedFeedbackList[editingIndex].text = feedback;
-                      updatedFeedbackList[editingIndex].isEditing = false;
-                      setFeedbackList(updatedFeedbackList);
-                    } else if (replyingIndex !== null) {
-                      // Add reply to feedback
-                      const updatedFeedbackList = [...feedbackList];
-                      updatedFeedbackList[replyingIndex].replies.push(feedback);
-                      setFeedbackList(updatedFeedbackList);
-                    } else {
-                      // Add new feedback
-                      handleSubmitFeedback();
-                    }
-                    setShowFeedbackForm(false);
-                    setFeedback('');
-                    setEditingIndex(null);
-                    setReplyingIndex(null); // Reset replying state
-                  }}
+                  onClick={handleSubmitFeedback} // Just call handleSubmitFeedback directly
                   className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
                 >
                   {replyingIndex !== null ? 'Submit Reply' : editingIndex !== null ? 'Save' : 'Submit'}
@@ -391,13 +376,22 @@ const AboutUs = () => {
                           <button
                             onClick={() => {
                               const feedbackItem = feedbackList[index];
-                              console.log('Editing feedback item:', feedbackItem);
+                              if (!feedbackItem._id) {
+                                Swal.fire({
+                                  icon: 'error',
+                                  title: 'Error',
+                                  text: 'Cannot edit feedback: Missing ID',
+                                });
+                                return;
+                              }
+                              
+                              console.log('Editing feedback:', feedbackItem);
                               setEditingId(feedbackItem._id);
                               setFeedback(feedbackItem.text);
                               setEditingIndex(index);
                               setShowFeedbackForm(true);
                               
-                              // Close the dropdown menu
+                              // Close dropdown
                               const updatedFeedbackList = [...feedbackList];
                               updatedFeedbackList[index].showMenu = false;
                               setFeedbackList(updatedFeedbackList);
