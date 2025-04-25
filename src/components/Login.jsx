@@ -1,6 +1,32 @@
 import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  email: yup.string().email("Invalid email address").required("Email is required"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .matches(/[A-Z]/, "Must contain an uppercase letter")
+    .matches(/[a-z]/, "Must contain a lowercase letter")
+    .matches(/\d/, "Must contain a number")
+    .matches(/[\W_]/, "Must contain a special character")
+    .required("Password is required"),
+});
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
+
+  const onSubmit = (data) => {
+    console.log("User Data:", data);
+    alert("Login Successful!");
+  };
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="w-full max-w-md bg-[#2b2d78] text-white p-8 rounded-xl shadow-lg relative">
@@ -29,23 +55,27 @@ const Login = () => {
         <p className="text-sm text-center opacity-80 mb-6">Sign in to continue</p>
 
         {/* Login Form */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label className="text-sm font-semibold">Email</label>
             <input
+              {...register("email")}
               type="email"
               placeholder="Enter your email"
               className="w-full mt-1 px-3 py-2 bg-gray-200 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-[#eeb029]"
             />
+            <p className="text-red-500 text-xs">{errors.email?.message}</p>
           </div>
 
           <div>
             <label className="text-sm font-semibold">Password</label>
             <input
+              {...register("password")}
               type="password"
               placeholder="Enter your password"
               className="w-full mt-1 px-3 py-2 bg-gray-200 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-[#eeb029]"
             />
+            <p className="text-red-500 text-xs">{errors.password?.message}</p>
           </div>
 
           <button

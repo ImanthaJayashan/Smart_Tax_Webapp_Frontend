@@ -151,7 +151,7 @@ const Signup = () => {
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="w-full mt-4 bg-[#eeb029] text-[#2b2d78] py-2 rounded-md font-semibold hover:scale-105 transition"
+                        className=" w-full mt-4 bg-[#eeb029] text-[#2b2d78] py-2 rounded-md font-semibold hover:scale-105 transition"
                     >
                         Sign Up
                     </button>

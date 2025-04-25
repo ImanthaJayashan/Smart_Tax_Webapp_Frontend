@@ -1,5 +1,6 @@
 import React from 'react'
 
+/* dummy data */
 const Profile = () => {
     const user = {
         name: "John Doe",
