@@ -1,30 +1,55 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-
-const schema = yup.object().shape({
-  email: yup.string().email("Invalid email address").required("Email is required"),
-  password: yup
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .matches(/[A-Z]/, "Must contain an uppercase letter")
-    .matches(/[a-z]/, "Must contain a lowercase letter")
-    .matches(/\d/, "Must contain a number")
-    .matches(/[\W_]/, "Must contain a special character")
-    .required("Password is required"),
-});
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios"; 
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    console.log("User Data:", data);
-    alert("Login Successful!");
+  const validateForm = () => {
+    const newErrors = {};
+    if (!email) newErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Invalid email address";
+
+    if (!password) newErrors.password = "Password is required";
+    else if (password.length < 8) newErrors.password = "Password must be at least 8 characters";
+    else if (!/[A-Z]/.test(password)) newErrors.password = "Must contain an uppercase letter";
+    else if (!/[a-z]/.test(password)) newErrors.password = "Must contain a lowercase letter";
+    else if (!/\d/.test(password)) newErrors.password = "Must contain a number";
+    else if (!/[\W_]/.test(password)) newErrors.password = "Must contain a special character";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/auth", {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        alert("Login Successful!");
+        localStorage.setItem("token", response.data.token)
+        localStorage.setItem("user", JSON.stringify(response.data.user))
+        if( response.data.user.role === "user") {
+          navigate("/profile");
+        } else if( response.data.user.role === "manager"){
+          navigate("/admin/dashboard");
+        }
+      } else {
+        alert(response.data.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert(error.response?.data?.message || "An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -33,20 +58,9 @@ const Login = () => {
         {/* Logo Icon */}
         <div className="flex justify-center">
           <div className="w-16 h-16 bg-[#eeb029] rounded-full flex items-center justify-center">
-            <svg
-              width="40"
-              height="40"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="12" cy="7" r="4" stroke="white" strokeWidth="2" />
-              <path
-                d="M4 21c0-5 8-5 8-5s8 0 8 5"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
+              <path d="M4 21c0-5 8-5 8-5s8 0 8 5" stroke="white" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </div>
         </div>
@@ -55,27 +69,29 @@ const Login = () => {
         <p className="text-sm text-center opacity-80 mb-6">Sign in to continue</p>
 
         {/* Login Form */}
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="text-sm font-semibold">Email</label>
             <input
-              {...register("email")}
               type="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full mt-1 px-3 py-2 bg-gray-200 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-[#eeb029]"
             />
-            <p className="text-red-500 text-xs">{errors.email?.message}</p>
+            <p className="text-red-500 text-xs">{errors.email}</p>
           </div>
 
           <div>
             <label className="text-sm font-semibold">Password</label>
             <input
-              {...register("password")}
               type="password"
               placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full mt-1 px-3 py-2 bg-gray-200 text-black rounded-md focus:outline-none focus:ring-2 focus:ring-[#eeb029]"
             />
-            <p className="text-red-500 text-xs">{errors.password?.message}</p>
+            <p className="text-red-500 text-xs">{errors.password}</p>
           </div>
 
           <button
@@ -88,7 +104,9 @@ const Login = () => {
 
         {/* Footer Links */}
         <div className="mt-4 text-sm text-center">
-          <a href="#" className="text-[#eeb029] hover:underline">Forgot password?</a>
+          <a href="#" className="text-[#eeb029] hover:underline">
+            Forgot password?
+          </a>
         </div>
       </div>
     </div>
