@@ -1,23 +1,55 @@
-import React from "react";
-import Homepage from "./components/Homepage"; //home page
-import AboutUs from './components/AboutUs'; // AboutUs import
-import Tax_Learning_home from './components/Tax_Learning_home'; // Tax_Learning_home import
-import LearnAboutTax from './components/LearnAboutTax'; // LearnAboutTax import
-import TaxCal from './components/taxcal'; // Import the TaxCal component
-import Taxform from './components/taxform'; // Import the Taxform component
-import { Route, Routes } from 'react-router-dom';
+import express from "express";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from 'url';
+import 'dotenv/config';
 
-const App = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<Homepage />} />
-      <Route path="/about" element={<AboutUs />} />
-      <Route path="/Tax_learning_home" element={<Tax_Learning_home />} /> {/* Fixed */}
-      <Route path="/LearnAboutTax" element={<LearnAboutTax />} /> {/* Fixed */}
-      <Route path="/taxcal" element={<TaxCal />} /> {/* Add this route */}
-      <Route path="/taxform" element={<Taxform />} /> {/* Add this route */}
-    </Routes>
-  );
-};
+import dbConnect from "./config/dbConnect.js";
+import transactionRoutes from "./routes/transactionRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
+import errorHandler from "./middlewares/errorHandler.js";
+import router from "./routes/routes.js";
 
-export default App;
+// Get __dirname equivalent in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+
+// CORS setup
+app.use(cors({
+    origin: "http://localhost:5173",
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+    credentials: true
+}));
+
+app.use(express.json());
+
+// Serve static files from uploads directory
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+
+// API Routes
+app.use("/api/transactions", transactionRoutes);
+app.use("/api/upload", uploadRoutes);
+app.use("/api", router);
+
+// Error handler (should come after routes)
+app.use(errorHandler);
+
+// Root route
+app.get("/", (req, res) => {
+    try {
+        res.status(200).json({ message: "Smart Tax API is running" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    dbConnect();
+});
