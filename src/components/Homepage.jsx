@@ -38,7 +38,7 @@ const HomePage = () => {
                 style={{ backgroundColor: '#eeb029' }}
                 className="hover:opacity-90 text-white py-2 px-4 rounded"
               >
-                Tax Learning Hub
+                Tax Hub
               </button>
             </div>
           </nav>
